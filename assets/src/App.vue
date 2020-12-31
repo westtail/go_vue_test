@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Home name="ようこそ西尾亮太"/>
+    {{test}}
   </div>
 </template>
 
@@ -12,11 +13,17 @@ export default {
   components: {
     Home
   },
+  data: function() {
+    return{
+      test: null
+    }
+  },
   // createdの中でaxiosを使います。get()の中のURLは、nginx.confで設定してるので、 /api/ になっています。
   created () {
     this.$axios.get('http://localhost/api/')
       .then(response => {
         console.log(response)
+        this.test = response
       })
   }
 }
