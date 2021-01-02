@@ -1,18 +1,34 @@
+// パッケージの宣言
 package main
 
-//echoのデータを取得
+//ほかのパッケージを取り込むために使用
 import (
-       "net/http"
-       "github.com/labstack/echo"
+       "net/http" //HTTPを扱うパッケージ
+       "github.com/labstack/echo" //echoパッケージ
+       //"fmt"
 )
 
-// メインの関数
+// メインの関数 基本的に最初に呼ばれる
 func main () {
-     e := echo.New() //Echoインスタンスを作成します｡
-     e.Static("/","public/")// 静的ファイル
-     e.GET("/", func(c echo.Context) error {
-        return c.String(http.StatusOK, "Hello, World!")
-     })
-     e.Logger.Fatal(e.Start(":8082"))
+   e := echo.New() //Echoインスタンスを作成します｡ var e 型はわからない = echo.New()と同じ
+
+   e.Static("/","public/")// 静的ファイル
+
+   e.GET("/", func(c echo.Context) error {
+      return c.String(http.StatusOK, "Hello, World!")// 
+   }) // GETリクエスト 例
+
+   e.GET("/test", getTest) // GETリクエスト 別の書き方もできる
+   e.GET("/test/:path", testParams)
+
+   e.Logger.Fatal(e.Start(":8082"))
      // e.Startの中はdocker-composeのgoコンテナで設定したportsを指定してください。
+}
+
+func getTest(c echo.Context) error {
+   return c.String(http.StatusOK, "Hello, World! test")
+}
+
+func testParams(c echo.Context) error {
+   return c.String(http.StatusOK, c.Param("path"))
 }

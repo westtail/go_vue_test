@@ -1,37 +1,37 @@
 version: '3'
+# docker-composeのバージョン
 services:
   vue:
-    build:
-      context: ./docker/vue
-    container_name: myapp-vue
-    ports:
-      - 8080:8080
-    volumes:
-      - .:/app
-    working_dir: /app
-    tty: true
-    command: sh -c "cd assets && yarn install && yarn serve"
+    build:  #dockerfileの指定
+      context: ./docker/vue #ディレクトリの指定
+    container_name: myapp-vue #コンテナの名前
+    ports: # ホストOSとdockerのポートの設定
+      - 8080:8080 # ホスト側:コンテナ側
+    volumes: # dockerの中でデータを永続化する設定です。
+      - .:/app #ホスト:コンテナ
+    working_dir: /app #コンテナ起動時の作業ディレクトリの指定
+    tty: true # コンテナを起動しっぱしにする
+    command: sh -c "cd assets && yarn install && yarn serve" # デフォルトのコマンドを上書きします。
 
   go:
-    build:
-      context: ./docker/go
-    container_name: myapp-go
-    ports:
-      - 8082:8082
-    volumes:
-      - .:/go/src
-    working_dir: /go/src/app
-    tty: true
-    command: fresh
-  # こっから下を追加
+    build: #dockerfileの指定
+      context: ./docker/go #ディレクトリの指定
+    container_name: myapp-go #コンテナの名前
+    ports: # ホストOSとdockerのポートの設定
+      - 8082:8082 # ホスト側:コンテナ側
+    volumes: # dockerの中でデータを永続化する設定
+      - .:/go/src #ホスト:コンテナ
+    working_dir: /go/src/app #コンテナ起動時の作業ディレクトリの指定
+    tty: true # コンテナを起動しっぱしにする
+    command: fresh # ソースコード変更時の自動コンパイルライブラリ
   nginx:
-    image: nginx
-    depends_on:
+    image: nginx #コンテナの元のイメージを指定
+    depends_on: #起動するタイミングを設定　1:go 2:nginx
       - go
-    container_name: myapp-nginx
-    ports:
-      - 80:80
-    environment:
-      - TZ=Asia/Tokyo
-    volumes:
+    container_name: myapp-nginx # コンテナの名前
+    ports: # ポーと出力設定
+      - 80:80 # ホスト:コンテナ
+    environment: # 環境変数の設定
+      - TZ=Asia/Tokyo # 時刻を日本に設定
+    volumes: # dockerの中でデータを永続化する設定
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
