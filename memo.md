@@ -3,7 +3,35 @@
 * runner-buildはfreshのふぁいる？
 * http://tsujitaku50.hatenablog.com/entry/2017/10/30/232659
 
+## go
+* 言語の基本
+    * https://qiita.com/megu_ma/items/6fad257345af2d748dbe
+* 文法
+    * https://qiita.com/megu_ma/items/f5e66293b2934e117731
+* net/http goでhttpを扱うようにするパッケージ
+* https://www.yoheim.net/blog.php?q=20170403
 
+### 文法
+変数宣言と初期化を関数の内部で行う場合は、var と型宣言を省略し、 := という記号を用いることができます。
+
+```
+var message string = "hello world"
+message := "hello world"
+```
+
+## 何でもメモ
+
+### echoについて
+* 公式ドキュメント
+    * https://echo.labstack.com/guide/routing
+### assets
+* https://qiita.com/codehex/items/a6cb72251b95c8f5baa1
+### axios
+* ブラウザやnode.js上で動くPromiseベースのHTTPクライアントです
+* 非同期にHTTP通信を行いたいときに容易に実装できます。 Vue.jsでは非同期通信を行うのにaxiosを使うのがスタンダード
+* https://github.com/axios/axios
+* https://qiita.com/ksh-fthr/items/2daaaf3a15c4c11956e9
+* https://www.willstyle.co.jp/blog/2751/
 # 参考URL
 
 * Goで作成したAPIサーバをdockerで複数コンテナ運用
