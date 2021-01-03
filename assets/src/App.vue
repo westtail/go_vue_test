@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <Home name="ようこそ西尾亮太"/>
-    test
-    {{test}}
-    test2
-    {{test2}}
+    <input v-model="message" placeholder="edit me">
+    <div class="btn-container"><button type="submit" class="btn btn-primary">送信</button></div>
+    <p>Message is: {{ message }}</p>
+    {{ param_test}}
   </div>
 </template>
 
@@ -18,22 +18,20 @@ export default {
   },
   data: function() {
     return{
-      test: null,
-      test2: null
+      message: null,
+      param_test: null
     }
   },
   // createdの中でaxiosを使います。get()の中のURLは、nginx.confで設定してるので、 /api/ になっています。
   created () {
-    this.$axios.get('http://localhost/api/')
-      .then(response => {
+    this.$axios.get('http://localhost/api/').then(response => {
         console.log(response)
-        this.test = response
-      })
-    this.$axios.get('http://localhost/api/test')
-      .then(response => {
+        this.message = response.data
+    })
+    this.$axios.get('http://localhost/api/hoge?key=test').then(response => {
         console.log(response)
-        this.test2 = response
-      })
+        this.param_test = response.data
+    })
   }
 }
 </script>

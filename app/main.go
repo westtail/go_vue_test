@@ -21,8 +21,11 @@ func main () {
    e.GET("/test", getTest) // GETリクエスト 別の書き方もできる
    e.GET("/test/:path", testParams)
 
+   e.GET("/hoge", hogeHandler) // パラメーター取得
+
    e.Logger.Fatal(e.Start(":8082"))
-     // e.Startの中はdocker-composeのgoコンテナで設定したportsを指定してください。
+   // このAPIの出力ポート
+   // e.Startの中はdocker-composeのgoコンテナで設定したportsを指定してください。
 }
 
 func getTest(c echo.Context) error {
@@ -31,4 +34,8 @@ func getTest(c echo.Context) error {
 
 func testParams(c echo.Context) error {
    return c.String(http.StatusOK, c.Param("path"))
+}
+
+func hogeHandler(c echo.Context) error {
+   return c.String(http.StatusOK, c.QueryParam("key"))
 }
