@@ -14,28 +14,22 @@ func main () {
 
    e.Static("/","public/")// 静的ファイル
 
-   e.GET("/", func(c echo.Context) error {
-      return c.String(http.StatusOK, "Hello, World!")// 
-   }) // GETリクエスト 例
+   e.GET("/data", firstData) // GETリクエスト 別の書き方もできる
 
-   e.GET("/test", getTest) // GETリクエスト 別の書き方もできる
-   e.GET("/test/:path", testParams)
+   e.GET("/params", returnParams) // パラメーター取得
 
-   e.GET("/hoge", hogeHandler) // パラメーター取得
-
+   // サーバーを開始
    e.Logger.Fatal(e.Start(":8082"))
    // このAPIの出力ポート
    // e.Startの中はdocker-composeのgoコンテナで設定したportsを指定してください。
 }
 
-func getTest(c echo.Context) error {
-   return c.String(http.StatusOK, "Hello, World! test")
+func firstData(c echo.Context) error {
+   return c.String(http.StatusOK, "こんにちは 値を入力してください")
 }
 
-func testParams(c echo.Context) error {
-   return c.String(http.StatusOK, c.Param("path"))
-}
 
-func hogeHandler(c echo.Context) error {
-   return c.String(http.StatusOK, c.QueryParam("key"))
+func returnParams(c echo.Context) error {
+   param := c.QueryParam("key")
+   return c.String(http.StatusOK, "key = " + param)
 }

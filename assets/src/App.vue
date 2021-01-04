@@ -1,37 +1,52 @@
 <template>
   <div id="app">
-    <Home name="ようこそ西尾亮太"/>
-    <input v-model="message" placeholder="edit me">
-    <div class="btn-container"><button type="submit" class="btn btn-primary">送信</button></div>
-    <p>Message is: {{ message }}</p>
-    {{ param_test}}
+    <h1>TodoApp</h1>
+    <div>
+      <label for="input">入力：</label>
+      <input type="text" v-model="input" placeholder="入力値">
+    </div>
+    <div>
+      <input type="submit" value="送信" @click="getInput">
+    </div>
+    {{ message}}
+    {{ param}}
+    <TodoTest></TodoTest>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import TodoTest from './components/todoTest.vue'
 
 export default {
   name: 'app',
   components: {
-    Home
+    TodoTest
   },
   data: function() {
     return{
       message: null,
-      param_test: null
+      param: null,
+      input: null,
     }
   },
   // createdの中でaxiosを使います。get()の中のURLは、nginx.confで設定してるので、 /api/ になっています。
   created () {
-    this.$axios.get('http://localhost/api/').then(response => {
+    this.$axios.get('http://localhost/api/data').then(response => {
         console.log(response)
         this.message = response.data
     })
-    this.$axios.get('http://localhost/api/hoge?key=test').then(response => {
+  },
+  methods: {
+    getInput:function(){
+      this.$axios.get('http://localhost/api/params',{
+        params:{
+          key: this.input
+        }
+      }).then(response => {
         console.log(response)
-        this.param_test = response.data
-    })
+        this.param = response.data
+      })
+    }
   }
 }
 </script>
