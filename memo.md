@@ -1,3 +1,7 @@
+# コマンドメモ
+```
+curl -s http://localhost/api/tasks
+```
 
 # goについて
 ## 参考URL
@@ -34,6 +38,12 @@ message := "hello world"
 ### assets
 * https://qiita.com/codehex/items/a6cb72251b95c8f5baa1
 
+# mysqlについて
+## "database/sql"について
+* SQL に関する汎用的な機能を提供してます。 コネクションの管理や、クエリの発行、トランザクションなど
+* https://blog.p1ass.com/posts/go-database-sql-wrapper/
+## go-sql-driver/mysqlについて
+* https://noumenon-th.net/programming/2019/09/20/go-sql-driver/ 
 # Vueについて
 * 公式ドキュメント
     * https://jp.vuejs.org/v2/guide/
@@ -75,3 +85,7 @@ message := "hello world"
     * https://qiita.com/pylor1n/items/36912a47c893ea5782cc
 * golang echo 超入門
     * https://hawksnowlog.blogspot.com/2019/04/tutorial-golang-echo.html
+
+* mySQLの連携で参考
+* https://qiita.com/sola-msr/items/eb3ae3d3cbd608b06cfe#docker-composeyml
+* https://qiita.com/Le0tk0k/items/c2945c260f28f7ee2d47#docker-composeyml

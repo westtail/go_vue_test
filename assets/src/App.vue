@@ -8,6 +8,7 @@
     <div>
       <input type="submit" value="送信" @click="getInput">
     </div>
+    <button @click="getDB"></button>
     {{ message}}
     {{ param}}
     <TodoTest></TodoTest>
@@ -45,6 +46,12 @@ export default {
       }).then(response => {
         console.log(response)
         this.param = response.data
+      })
+    },
+    getDB:function(){
+      this.$axios.get('http://localhost/api/tasks').then(response => {
+        console.log(response.data)
+        //this.param = response.data
       })
     }
   }

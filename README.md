@@ -14,3 +14,6 @@
 
 ### miroによる設計
 * https://miro.com/app/board/o9J_laR7J80=/
+
+### github 
+* https://github.com/westtail/go_vue_test
