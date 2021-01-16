@@ -1,5 +1,5 @@
-// パッケージの宣言
 package main
+// パッケージの宣言
 
 //ほかのパッケージを取り込むために使用
 import (
@@ -11,6 +11,36 @@ import (
        _ "github.com/go-sql-driver/mysql" //database/sqlパッケージのMySQLドライバー
 )
 
+// メインの関数 基本的に最初に呼ばれる
+func main () {
+   e := echo.New() //Echoインスタンスを作成します｡ var e 型はわからない = echo.New()と同じ
+
+   e.Static("/","public/")// 静的ファイル
+
+   e.GET("/params", returnParams) // パラメーター取得
+
+   e.GET("/tasks", getTasks) // DBへのリクエスト
+
+   e.GET("/connect", connectCheck) // コネクトチェック
+   // webAPI
+   //e.GET("/tasks", getTasks)            // 一覧
+   //e.GET("/tasks/:id", getTask)         // 詳細
+   //e.POST("/tasks", saveTask)           // 作成
+   //e.PUT("/tasks/:id", updateTask)      // 編集
+   //e.DELETE("//tasks/:id", deleteTask)  // 削除
+
+   e.Logger.Fatal(e.Start(":8082"))
+   // サーバーを開始 このAPIの出力ポート e.Startの中はdocker-composeのgoコンテナで設定したportsを指定
+}
+
+func connectCheck(c echo.Context) error {
+   return c.String(http.StatusOK, "こんにちは 値を入力してください")
+}
+
+func returnParams(c echo.Context) error {
+   param := c.QueryParam("key")
+   return c.String(http.StatusOK, "key = " + param)
+}
 
 // JSON用の構造体を定義
 type Task struct {
@@ -18,37 +48,11 @@ type Task struct {
    Name string `json:"name"`
 }
 
-// メインの関数 基本的に最初に呼ばれる
-func main () {
-   e := echo.New() //Echoインスタンスを作成します｡ var e 型はわからない = echo.New()と同じ
-
-   e.Static("/","public/")// 静的ファイル
-
-   e.GET("/data", firstData) // GETリクエスト 別の書き方もできる
-
-   e.GET("/params", returnParams) // パラメーター取得
-
-   e.GET("/tasks", getTasks) // DBへのリクエスト
-
-   // サーバーを開始
-   e.Logger.Fatal(e.Start(":8082"))
-   // このAPIの出力ポート
-   // e.Startの中はdocker-composeのgoコンテナで設定したportsを指定してください。
-}
-
-func firstData(c echo.Context) error {
-   return c.String(http.StatusOK, "こんにちは 値を入力してください")
-}
-
-
-func returnParams(c echo.Context) error {
-   param := c.QueryParam("key")
-   return c.String(http.StatusOK, "key = " + param)
-}
-
 func dbConnect() *sql.DB {
    // DB接続処理
+   //sql.DB DBを司るオブジェクト ＊はポインタ変数の宣言
    db, err := sql.Open("mysql", "root:password@tcp(myapp_db)/test_todo")
+   //ローカルのmysqlの指定したデータベースにアクセス出来る
    if err != nil {
        panic(err.Error())
    }
@@ -65,8 +69,8 @@ func getRows(db *sql.DB) *sql.Rows {
 
 func getTasks(c echo.Context) error {
    // DB接続
-   db := dbConnect()
-   defer db.Close()
+   db := dbConnect() // データベースの設定
+   defer db.Close() // コネクション解放
    rows := getRows(db)
    defer rows.Close()
 

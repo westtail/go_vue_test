@@ -32,7 +32,7 @@ export default {
   },
   // createdの中でaxiosを使います。get()の中のURLは、nginx.confで設定してるので、 /api/ になっています。
   created () {
-    this.$axios.get('http://localhost/api/data').then(response => {
+    this.$axios.get('http://localhost/api/connect').then(response => {
         console.log(response)
         this.message = response.data
     })

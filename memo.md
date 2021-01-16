@@ -9,6 +9,7 @@ curl -s http://localhost/api/tasks
     * https://qiita.com/megu_ma/items/6fad257345af2d748dbe
 * 文法
     * https://qiita.com/megu_ma/items/f5e66293b2934e117731
+    * https://qiita.com/k-penguin-sato/items/1d0e1c6b4bf937996cd3
 * net/http goでhttpを扱うようにするパッケージ
     * https://www.yoheim.net/blog.php?q=20170403
 ## fresh
@@ -25,20 +26,22 @@ message := "hello world"
 上下は一緒のこと
 ```
 
-## httpリクエスト
-### GET
-```
-
-```
 ## echoについて
 * 公式ドキュメント
     * https://echo.labstack.com/guide/routing
+    * https://echo.labstack.com/guide
 ### echoのテストについて
 * https://qiita.com/kiyc/items/c20ac7bb6997c0753314
 ### assets
 * https://qiita.com/codehex/items/a6cb72251b95c8f5baa1
 
+## restfulAPI
+* https://dev.classmethod.jp/articles/web-api_rest-api_url-design/
 # mysqlについて
+
+## 基本文法
+* https://qiita.com/knife0125/items/bb095a85d1a5d3c8f706
+* https://qiita.com/knife0125/items/bb095a85d1a5d3c8f706#%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%8C%BF%E5%85%A5insert
 ## "database/sql"について
 * SQL に関する汎用的な機能を提供してます。 コネクションの管理や、クエリの発行、トランザクションなど
 * https://blog.p1ass.com/posts/go-database-sql-wrapper/
