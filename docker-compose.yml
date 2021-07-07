@@ -24,6 +24,20 @@ services:
     working_dir: /go/src/app #コンテナ起動時の作業ディレクトリの指定
     tty: true # コンテナを起動しっぱしにする
     command: fresh # ソースコード変更時の自動コンパイルライブラリ
+  db:
+    container_name: myapp_db # わかりやすいコンテナ名にしておく（任意）
+    image: mysql:8.0 # イメージを取ってくる
+    command: --default-authentication-plugin=mysql_native_password # 従来の認証方式にしておく
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./logs:/var/log/mysql
+    environment: # 環境変数
+      - MYSQL_DATABASE=test_todo
+      - MYSQL_ROOT_PASSWORD=password
+      - TZ=Asia/Tokyo
+    ports:
+      - 3307:3306
+
   nginx:
     image: nginx #コンテナの元のイメージを指定
     depends_on: #起動するタイミングを設定　1:go 2:nginx
@@ -35,3 +49,5 @@ services:
       - TZ=Asia/Tokyo # 時刻を日本に設定
     volumes: # dockerの中でデータを永続化する設定
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+volumes: # データの永続化
+  db-store: # データベースの永続化

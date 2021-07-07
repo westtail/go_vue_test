@@ -1,39 +1,59 @@
 <template>
   <div id="app">
-    <Home name="ようこそ西尾亮太"/>
-    test
-    {{test}}
-    test2
-    {{test2}}
+    <h1>TodoApp</h1>
+    <div>
+      <label for="input">入力：</label>
+      <input type="text" v-model="input" placeholder="入力値">
+    </div>
+    <div>
+      <input type="submit" value="送信" @click="getInput">
+    </div>
+    <button @click="getDB"></button>
+    {{ message}}
+    {{ param}}
+    <TodoTest></TodoTest>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import TodoTest from './components/todoTest.vue'
 
 export default {
   name: 'app',
   components: {
-    Home
+    TodoTest
   },
   data: function() {
     return{
-      test: null,
-      test2: null
+      message: null,
+      param: null,
+      input: null,
     }
   },
   // createdの中でaxiosを使います。get()の中のURLは、nginx.confで設定してるので、 /api/ になっています。
   created () {
-    this.$axios.get('http://localhost/api/')
-      .then(response => {
+    this.$axios.get('http://localhost/api/connect').then(response => {
         console.log(response)
-        this.test = response
-      })
-    this.$axios.get('http://localhost/api/test')
-      .then(response => {
+        this.message = response.data
+    })
+  },
+  methods: {
+    getInput:function(){
+      this.$axios.get('http://localhost/api/params',{
+        params:{
+          key: this.input
+        }
+      }).then(response => {
         console.log(response)
-        this.test2 = response
+        this.param = response.data
       })
+    },
+    getDB:function(){
+      this.$axios.get('http://localhost/api/tasks').then(response => {
+        console.log(response.data)
+        //this.param = response.data
+      })
+    }
   }
 }
 </script>
